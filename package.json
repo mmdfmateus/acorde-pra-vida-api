@@ -1,0 +1,22 @@
+{
+  "name": "acorde-pra-vida-api",
+  "version": "1.0.0",
+  "description": "REST API for \"Acorde pra vida!\" website, part of the final project from Web Development subject at CEFET-MG",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mmdfmateus/acorde-pra-vida-api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mmdfmateus/acorde-pra-vida-api/issues"
+  },
+  "homepage": "https://github.com/mmdfmateus/acorde-pra-vida-api#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
