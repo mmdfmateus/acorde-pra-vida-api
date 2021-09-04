@@ -12,6 +12,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
+//  *** CRIAR CONTA ***
 app.post('/api/signup', async (req, res) => {
   const { name, email, emailConfirmation, password } = req.body;
 
@@ -36,6 +37,8 @@ app.post('/api/signup', async (req, res) => {
   return res.json({ status: success ? 'ok' : 'error' });
 })
 
+
+//  *** LOGIN ***
 app.post('/api/login', async (req, res) => {
   const { email, password } = req.body;
 
@@ -55,6 +58,8 @@ app.post('/api/login', async (req, res) => {
   return res.json({status: success ? 'ok' : 'error', authToken });
 });
 
+
+//  *** BUSCAR USUÁRIO PELO EMAIL ***
 app.get('/api/user/:email', async (req, res) => {
   const { email } = req.params;
 
@@ -62,6 +67,22 @@ app.get('/api/user/:email', async (req, res) => {
   console.log('user', user);
 
   return res.json({ status: 'ok', user });
+})
+
+
+//  *** ATUALIZAR DADOS CADASTRAIS ***
+app.put('/api/user/:id', async (req, res) => {
+  const { id } = req.params;
+  let { email, password } = req.body;
+
+  if (password) {
+    password = await cryptoService.encrypt(password);
+  }
+
+  const success = await db.updateUserInfo(id, email, password);
+  // console.log('user', user);
+
+  return res.json({ status: success ? 'ok' : 'error' });
 })
 
 app.listen(port, console.log('Server running on port ' + port));

@@ -29,12 +29,42 @@ const getUserByEmail = async (email) => {
   }
 }
 
+const updateUserInfo = async (id, email, password) => {
+  try {
+    const conn = await connect();
+    let values = [ id ];
+    let emailUpdate = '';
+    let passwordUpdate = '';
+    
+    if (password) {
+      passwordUpdate = 'password=?';
+      values.unshift(password);
+    }
+
+    if (email) {
+      emailUpdate = 'email=?';
+      values.unshift(email);
+    }
+
+    const comma = email && password ? ', ' : '';
+
+    const sqlUpdateUser = `UPDATE user SET ${emailUpdate} ${comma} ${passwordUpdate} WHERE userId=?`;
+    const result = await conn.query(sqlUpdateUser, values);
+
+    return true;
+    
+  } catch (error) {
+    console.error(error);
+    return undefined;
+  }
+}
+
 const updateUserAccessToken = async (userId, accessToken) => {
   try {
     const conn = await connect();
-    const sqlInsertUser = "UPDATE user SET authToken=? WHERE userId=?"
+    const sqlUpdateUser = "UPDATE user SET authToken=? WHERE userId=?"
     
-    const result = await conn.query(sqlInsertUser, [ accessToken, userId ]);
+    const result = await conn.query(sqlUpdateUser, [ accessToken, userId ]);
     return true;
   } catch (error) {
     console.error(error);
@@ -46,4 +76,5 @@ export default {
   insertUser,
   getUserByEmail,
   updateUserAccessToken,
+  updateUserInfo,
 }

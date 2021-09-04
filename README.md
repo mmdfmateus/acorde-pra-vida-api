@@ -8,7 +8,7 @@ Estes são os endpoints disponíveis na API
 
 ## **Cadastro**
 
-### **Criar conta**
+### **Criar conta** ✅
 
 ```
 POST /api/signup
@@ -22,7 +22,7 @@ Content-Type: application/json
 }
 ```
 
-### **Login**
+### **Login**  ✅
 
 ```
 POST /api/login
@@ -36,7 +36,7 @@ Content-Type: application/json
 
 ## **Usuário**
 
-### **Alterar dados cadastrais**
+### **Alterar dados cadastrais** ✅
 
 ```
 PUT /api/users/<ID DO USUÁRIO>
