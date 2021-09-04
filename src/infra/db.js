@@ -1,90 +1,45 @@
-import mysql from 'mysql';
-import { uuid } from 'uuidv4';
-
-const db = mysql.createPool({
-  // configuração de acesso
-  host: '127.0.0.1',
-  database: 'AcordePraVida',
-  user: 'root',
-  password: '123456',
-  port: 3306,
-
-  // configuração das conexões
-  multipleStatements: true,
-
-  // configuração da pool
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0
-});
+import { connect } from './conn.js';
 
 
-
-const users = [];
-
-const insertUser = (user) => {
+const insertUser = async (user) => {
   try {
+    const conn = await connect();
     const sqlInsertUser = "INSERT INTO user (userId, isEmailConfirmed, email, password, name, authToken, roleId) VALUES (NULL, true, ?, ?, ?, NULL, 2)"
+    await conn.query(sqlInsertUser, [ user.email, user.hashedPassword, user.name]);
     
-    db.query(sqlInsertUser, [ user.email, user.hashedPassword, user.name], (error,result)=>{
-      console.log(result);
-      console.log(error);
-      return result;
-    });
+    return true;
   } catch (error) {
     console.error(error);
+    return false;
   }
-
-
-
-
-  // IMPLEMENTAÇÃO COM ARRAY, PQ NAO CONSEGUI CONECTAR COM O BD
-  // users.push({ id: uuid(), ...user });
-  // console.log(users);
 }
 
-const getUserByEmail = (email) => {
+const getUserByEmail = async (email) => {
   try {
+    const conn = await connect();
     const sqlGetUser = "SELECT * FROM user WHERE email = ?";
+    const result = await conn.query(sqlGetUser, [ email ]);
+
+    // console.log(result[0]);
+    return result[0][0] ?? undefined;
     
-    db.query(sqlGetUser, [ email ], (error,result)=>{
-      console.log(result);
-      console.log(error);
-      return result;
-    });
   } catch (error) {
     console.error(error);
+    return undefined;
   }
-
-
-  // IMPLEMENTAÇÃO COM ARRAY, PQ NAO CONSEGUI CONECTAR COM O BD
-  // console.log(users);
-  // return users.find(user => user.email == email);
 }
 
-const updateUserAccessToken = (userId, accessToken) => {
-
+const updateUserAccessToken = async (userId, accessToken) => {
   try {
-    const sqlInsertUser = "UPDATE user  SET (userId, isEmailConfirmed, email, password, name, authToken, roleId) VALUES (NULL, true, ?, ?, ?, NULL, 2)"
+    const conn = await connect();
+    const sqlInsertUser = "UPDATE user SET authToken=? WHERE userId=?"
     
-    db.query(sqlInsertUser, [ user.email, user.hashedPassword, user.name], (error,result)=>{
-      console.log(result);
-      console.log(error);
-      return result;
-    });
+    const result = await conn.query(sqlInsertUser, [ accessToken, userId ]);
+    return true;
   } catch (error) {
     console.error(error);
+    return false;
   }
-
-
-  // IMPLEMENTAÇÃO COM ARRAY, PQ NAO CONSEGUI CONECTAR COM O BD
-  const user = users.find(user => user.id == userId);
-  const index = users.findIndex(user => user.id == userId);
-
-  const updatedUser = {  ...user, accessToken };
-  console.log(`updating user on index ${index} to value ${JSON.stringify(updatedUser)}`);
-  users[index] = updatedUser;
-  console.log(users);
 }
 
 export default {

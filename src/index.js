@@ -19,7 +19,7 @@ app.post('/api/signup', async (req, res) => {
     return res.status(400).json({ error: 'Email is not equal to email confirmation' });
   }
 
-  if (db.getUserByEmail(email)) {
+  if (await db.getUserByEmail(email)) {
     return res.status(400).json({ error: 'Email is already in use' });
   }
   
@@ -31,28 +31,37 @@ app.post('/api/signup', async (req, res) => {
     hashedPassword
   }
 
-  db.insertUser(user);
+  const success = await db.insertUser(user);
 
-  return res.json({status: 'ok', id: req.params.id});
+  return res.json({ status: success ? 'ok' : 'error' });
 })
 
 app.post('/api/login', async (req, res) => {
   const { email, password } = req.body;
 
-  const user = db.getUserByEmail(email)
+  const user = await db.getUserByEmail(email)
   if (user == undefined) {
     return res.status(403).json({ error: 'Invalid credentials provided' });
   }
-  
-  const isAuthenticated = await cryptoService.compare(password, user.hashedPassword);
+
+  const isAuthenticated = await cryptoService.compare(password, user.password);
   if (!isAuthenticated) {
     return res.status(403).json({ error: 'Invalid credentials provided' });
   }
 
-  const authToken = jwtService.generate(user.id);
-  db.updateUserAccessToken(user.id, authToken);
+  const authToken = jwtService.generate(user.userId);
+  const success = await db.updateUserAccessToken(user.userId, authToken);
 
-  return res.json({status: 'ok', authToken });
+  return res.json({status: success ? 'ok' : 'error', authToken });
+});
+
+app.get('/api/user/:email', async (req, res) => {
+  const { email } = req.params;
+
+  const user = await db.getUserByEmail(email);
+  console.log('user', user);
+
+  return res.json({ status: 'ok', user });
 })
 
 app.listen(port, console.log('Server running on port ' + port));
