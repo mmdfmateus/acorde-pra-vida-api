@@ -15,100 +15,73 @@ CREATE SCHEMA IF NOT EXISTS `AcordePraVida` DEFAULT CHARACTER SET utf8 COLLATE u
 USE `AcordePraVida` ;
 
 -- -----------------------------------------------------
--- Table `AcordePraVida`.`usuario`
+-- Table `AcordePraVida`.`user`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `AcordePraVida`.`usuario` ;
+DROP TABLE IF EXISTS `AcordePraVida`.`user` ;
 
-CREATE TABLE IF NOT EXISTS `AcordePraVida`.`usuario` (
-`usuarioid` INT PRIMARY KEY AUTO_INCREMENT,
-`ativo` BOOLEAN NOT NULL,
-`email` VARCHAR(256),
-`emailconfirmado` BOOLEAN NOT NULL,
-`senha` VARCHAR(256) NOT NULL,
-`nome` VARCHAR(256) NOT NULL,
-`funcaoid` INT NOT NULL)
+CREATE TABLE IF NOT EXISTS `AcordePraVida`.`user` (
+`userId` INT PRIMARY KEY AUTO_INCREMENT,
+`isEmailConfirmed` BOOLEAN NOT NULL,
+`email` VARCHAR(256) NOT NULL,
+`password` VARCHAR(256) NOT NULL,
+`name` VARCHAR(256) NOT NULL,
+`authToken` VARCHAR(256),
+`roleId` INT NOT NULL)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `AcordePraVida`.`funcao`
+-- Table `AcordePraVida`.`role`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `AcordePraVida`.`funcao` ;
+DROP TABLE IF EXISTS `AcordePraVida`.`role` ;
 
-CREATE TABLE IF NOT EXISTS `AcordePraVida`.`funcao` (
-`funcaoid` INT PRIMARY KEY AUTO_INCREMENT,
-`funcao` VARCHAR(256))
+CREATE TABLE IF NOT EXISTS `AcordePraVida`.`role` (
+`roleId` INT PRIMARY KEY AUTO_INCREMENT,
+`role` VARCHAR(256))
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `AcordePraVida`.`cifra`
+-- Table `AcordePraVida`.`song`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `AcordePraVida`.`cifra` ;
+DROP TABLE IF EXISTS `AcordePraVida`.`song` ;
 
-CREATE TABLE IF NOT EXISTS `AcordePraVida`.`cifra` (
-`cifraid` INT PRIMARY KEY AUTO_INCREMENT,
-`conteudo` VARCHAR(1024),
-`usuarioid` INT NOT NULL,
-`musicaid` INT NOT NULL)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `AcordePraVida`.`musica`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `AcordePraVida`.`musica` ;
-
-CREATE TABLE IF NOT EXISTS `AcordePraVida`.`musica` (
-`musicaid` INT PRIMARY KEY AUTO_INCREMENT,
-`nome` VARCHAR(256),
-`dificuldade` INT NULL,
-`visualizacoes` INT NULL,
-`videourl` VARCHAR(256) NOT NULL,
-`genero` VARCHAR(256) NOT NULL,
-`artistaid` INT NOT NULL,
-`notaid` INT NOT NULL)
+CREATE TABLE IF NOT EXISTS `AcordePraVida`.`song` (
+`songId` INT PRIMARY KEY AUTO_INCREMENT,
+`name` VARCHAR(256),
+`content` VARCHAR(1024),
+`level` INT NULL,
+`views` INT NULL,
+`videoUrl` VARCHAR(256) NOT NULL,
+`genre` VARCHAR(256) NOT NULL,
+`userId` INT NOT NULL,
+`artistId` INT NOT NULL,
+`rating` INT NOT NULL)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `AcordePraVida`.`artista`
+-- Table `AcordePraVida`.`artist`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `AcordePraVida`.`artista` ;
+DROP TABLE IF EXISTS `AcordePraVida`.`artist` ;
 
-CREATE TABLE IF NOT EXISTS `AcordePraVida`.`artista` (
-`artistaid` INT PRIMARY KEY AUTO_INCREMENT,
-`nome` VARCHAR(256),
-`visualizacoes` INT NULL,
-`genero` VARCHAR(256) NOT NULL,
-`fotourl` VARCHAR(256) NOT NULL, 
-`notaid` INT NOT NULL)
-ENGINE = InnoDB;
-
--- -----------------------------------------------------
--- Table `AcordePraVida`.`nota`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `AcordePraVida`.`nota` ;
-
-CREATE TABLE IF NOT EXISTS `AcordePraVida`.`nota` (
-`notaid` INT PRIMARY KEY AUTO_INCREMENT,
-`nota` VARCHAR(256) NOT NULL)
+CREATE TABLE IF NOT EXISTS `AcordePraVida`.`artist` (
+`artistId` INT PRIMARY KEY AUTO_INCREMENT,
+`name` VARCHAR(256),
+`views` INT NULL,
+`genre` VARCHAR(256) NOT NULL,
+`photoUrl` VARCHAR(256) NOT NULL, 
+`rating` INT NOT NULL)
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
 -- foreign keys
 -- -----------------------------------------------------
 
-ALTER TABLE `usuario` ADD CONSTRAINT `fk_possui_funcao` FOREIGN KEY ( `funcaoid` ) REFERENCES `funcao` ( `funcaoid` );
+ALTER TABLE `user` ADD CONSTRAINT `fk_has_role` FOREIGN KEY ( `roleId` ) REFERENCES `role` ( `roleId` );
 
-ALTER TABLE `cifra` ADD CONSTRAINT `fk_criada_usuario` FOREIGN KEY ( `usuarioid` ) REFERENCES `usuario` ( `usuarioid` );
+ALTER TABLE `song` ADD CONSTRAINT `fk_created_by_user` FOREIGN KEY ( `userId` ) REFERENCES `user` ( `userId` );
 
-ALTER TABLE `cifra` ADD CONSTRAINT `fk_pertence_musica` FOREIGN KEY ( `musicaid` ) REFERENCES `musica` ( `musicaid` );
-
-ALTER TABLE `musica` ADD CONSTRAINT `fk_pertence_artista` FOREIGN KEY ( `artistaid` ) REFERENCES `artista` ( `artistaid` );
-
-ALTER TABLE `musica` ADD CONSTRAINT `fk_musica_tem_nota` FOREIGN KEY ( `notaid` ) REFERENCES `nota` ( `notaid` );
-
-ALTER TABLE `artista` ADD CONSTRAINT `fk_artista_tem_nota` FOREIGN KEY ( `notaid` ) REFERENCES `nota` ( `notaid` );
+ALTER TABLE `song` ADD CONSTRAINT `fk_has_artist` FOREIGN KEY ( `artistId` ) REFERENCES `artist` ( `artistId` );
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

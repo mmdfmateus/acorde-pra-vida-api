@@ -23,31 +23,58 @@ const db = mysql.createPool({
 const users = [];
 
 const insertUser = (user) => {
-  // const sqlInsertUser = "INSERT INTO usuario (usuarioid,ativo,email,emailconfirmado,senha,nome,funcaoid) VALUES (NULL,true,?,true,?,?,2)";
-
-  // db.query();
+  try {
+    const sqlInsertUser = "INSERT INTO user (userId, isEmailConfirmed, email, password, name, authToken, roleId) VALUES (NULL, true, ?, ?, ?, NULL, 2)"
+    
+    db.query(sqlInsertUser, [ user.email, user.hashedPassword, user.name], (error,result)=>{
+      console.log(result);
+      console.log(error);
+      return result;
+    });
+  } catch (error) {
+    console.error(error);
+  }
 
 
 
 
   // IMPLEMENTAÇÃO COM ARRAY, PQ NAO CONSEGUI CONECTAR COM O BD
-  users.push({ id: uuid(), ...user });
-  console.log(users);
+  // users.push({ id: uuid(), ...user });
+  // console.log(users);
 }
 
 const getUserByEmail = (email) => {
-
-
+  try {
+    const sqlGetUser = "SELECT * FROM user WHERE email = ?";
+    
+    db.query(sqlGetUser, [ email ], (error,result)=>{
+      console.log(result);
+      console.log(error);
+      return result;
+    });
+  } catch (error) {
+    console.error(error);
+  }
 
 
   // IMPLEMENTAÇÃO COM ARRAY, PQ NAO CONSEGUI CONECTAR COM O BD
-  console.log(users);
-  return users.find(user => user.email == email);
+  // console.log(users);
+  // return users.find(user => user.email == email);
 }
 
 const updateUserAccessToken = (userId, accessToken) => {
 
-
+  try {
+    const sqlInsertUser = "UPDATE user  SET (userId, isEmailConfirmed, email, password, name, authToken, roleId) VALUES (NULL, true, ?, ?, ?, NULL, 2)"
+    
+    db.query(sqlInsertUser, [ user.email, user.hashedPassword, user.name], (error,result)=>{
+      console.log(result);
+      console.log(error);
+      return result;
+    });
+  } catch (error) {
+    console.error(error);
+  }
 
 
   // IMPLEMENTAÇÃO COM ARRAY, PQ NAO CONSEGUI CONECTAR COM O BD
