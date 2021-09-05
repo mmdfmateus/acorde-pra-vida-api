@@ -142,13 +142,32 @@ const updateSong = async (id, data) => {
   }
 }
 
+const insertArtist = async ({ name, genre, photoUrl }) => {
+  try {
+    const conn = await connect();
+    const sqlQuery = "INSERT INTO artist (artistId, name, views, photoUrl, genre, rating) VALUES (NULL, ?, 0, ?, ?, 0)"
+    await conn.query(sqlQuery, [ name, photoUrl, photoUrl ]);
+    
+    return true;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}
+
 export default {
+  /* USER */
   insertUser,
   getUserByEmail,
   updateUserAccessToken,
   updateUserInfo,
+
+  /* SONGS */
   getSongs,
   getSongById,
   insertSong,
   updateSong,
+
+  /* ARTISTS */
+  insertArtist,
 }

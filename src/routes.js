@@ -1,4 +1,5 @@
 import express from 'express';
+import artistController from './controllers/artistController.js';
 import loginController from './controllers/loginController.js';
 import signupController from './controllers/signupController.js';
 import songController from './controllers/songController.js';
@@ -32,5 +33,10 @@ router.post('/songs', songController.createSong);
 
 //  *** EDITAR MÚSICA ***
 router.put('/songs/:id', songController.editSong);
+
+
+
+//  *** CRIAR ARTISTA ***
+router.post('/artists', artistController.createArtist);
 
 export default router;

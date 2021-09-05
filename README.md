@@ -123,7 +123,7 @@ GET /api/artists/<ID DO ARTISTA>
 Content-Type: application/json
 ```
 
-### **Criar artista**
+### **Criar artista** ✅
 
 ```
 POST /api/artists
