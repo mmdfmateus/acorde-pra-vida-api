@@ -50,7 +50,7 @@ Content-Type: application/json
 
 ## **Músicas**
 
-### **Buscar músicas**
+### **Buscar músicas** ✅
 
 Retorna as 10 primeiras músicas por padrão
 
@@ -71,7 +71,7 @@ GET /api/songs/<ID DA MÚSICA>
 Content-Type: application/json
 ```
 
-### **Criar música**
+### **Criar música** ✅
 
 ```
 POST /api/songs
@@ -86,7 +86,7 @@ Content-Type: application/json
 }
 ```
 
-### **Editar música**
+### **Editar música** ✅
 
 ```
 PUT /api/songs/<ID DA MÚSICA>
