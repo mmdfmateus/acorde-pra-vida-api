@@ -1,6 +1,7 @@
-FROM node:10-alpine
+FROM node:14-alpine
 WORKDIR /app
 COPY package.json .
 RUN npm install
-COPY src/index.js .
-CMD ["node", "index.js"]
+RUN apk --no-cache add --virtual builds-deps build-base python
+COPY . .
+CMD ["npm", "start"]

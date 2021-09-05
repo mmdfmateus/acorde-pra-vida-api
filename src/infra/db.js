@@ -1,4 +1,4 @@
-import conn, { connect } from './conn.js';
+import { connect } from './conn.js';
 
 
 const insertUser = async (user) => {
@@ -72,13 +72,14 @@ const updateUserAccessToken = async (userId, accessToken) => {
   }
 }
 
-const getSongs = async (take, skip) => {
+const getSongs = async () => {
   try {
     const conn = await connect();
-    const sqlQuery = `select * from song order by [views] offset ? rows FETCH NEXT ? rows only`;
+    // const sqlQuery = `select * from song limit ? offset ?`;
+    const sqlQuery = `select * from song`;
     
-    const result = await conn.query(sqlQuery, [ skip, take ]);
-    console.log('result', result);
+    const result = await conn.query(sqlQuery);
+    console.log('result', result[0]);
 
     return result[0];
   } catch (error) {

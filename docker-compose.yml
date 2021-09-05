@@ -1,9 +1,9 @@
 version: '3.5'
 services:
-    # api:
-    #     image: acordepravida-api
-    #     ports:
-    #         - "5501:5501"
+    api:
+        image: acordepravida-api
+        ports:
+            - "5501:5501"
     database:
         image: acordepravida-mysql
         ports:

@@ -22,7 +22,7 @@ router.put('/users/:id', userController.updateUserInfo);
 
 
 //  *** BUSCAR MÚSICAS ***
-router.put('/songs/:id', songController.getSongs);
+router.get('/songs', songController.getSongs);
 
 //  *** CRIAR MÚSICA ***
 router.post('/songs', songController.createSong);

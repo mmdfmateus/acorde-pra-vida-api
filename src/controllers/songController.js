@@ -1,12 +1,18 @@
 import db from "../infra/db.js";
 
 const getSongs = async (req, res) => {
-  const { take, skip } = req.params;
+  let { take, skip } = req.query;
 
-  const songs = await db.getSongs(skip, take);
-  console.log('songs', songs);
+  take = take ?? 10;
+  skip = skip ?? 0;
 
-  return res.json(songs);
+  let songs = await db.getSongs();
+  const result = songs.slice(skip, skip + (take - 1));
+  console.log('songs', result.length);
+  console.log('take', take);
+  console.log('skip', skip);
+
+  return res.json(result);
 }
 
 const createSong = async (req, res) => {
