@@ -1,11 +1,11 @@
-import { connect } from './conn.js';
+import conn, { connect } from './conn.js';
 
 
 const insertUser = async (user) => {
   try {
     const conn = await connect();
-    const sqlInsertUser = "INSERT INTO user (userId, isEmailConfirmed, email, password, name, authToken, roleId) VALUES (NULL, true, ?, ?, ?, NULL, 2)"
-    await conn.query(sqlInsertUser, [ user.email, user.hashedPassword, user.name]);
+    const sqlQuery = "INSERT INTO user (userId, isEmailConfirmed, email, password, name, authToken, roleId) VALUES (NULL, true, ?, ?, ?, NULL, 2)"
+    await conn.query(sqlQuery, [ user.email, user.hashedPassword, user.name]);
     
     return true;
   } catch (error) {
@@ -17,8 +17,8 @@ const insertUser = async (user) => {
 const getUserByEmail = async (email) => {
   try {
     const conn = await connect();
-    const sqlGetUser = "SELECT * FROM user WHERE email = ?";
-    const result = await conn.query(sqlGetUser, [ email ]);
+    const sqlQuery = "SELECT * FROM user WHERE email = ?";
+    const result = await conn.query(sqlQuery, [ email ]);
 
     // console.log(result[0]);
     return result[0][0] ?? undefined;
@@ -48,8 +48,8 @@ const updateUserInfo = async (id, email, password) => {
 
     const comma = email && password ? ', ' : '';
 
-    const sqlUpdateUser = `UPDATE user SET ${emailUpdate} ${comma} ${passwordUpdate} WHERE userId=?`;
-    const result = await conn.query(sqlUpdateUser, values);
+    const sqlQuery = `UPDATE user SET ${emailUpdate} ${comma} ${passwordUpdate} WHERE userId=?`;
+    const result = await conn.query(sqlQuery, values);
 
     return true;
     
@@ -62,9 +62,37 @@ const updateUserInfo = async (id, email, password) => {
 const updateUserAccessToken = async (userId, accessToken) => {
   try {
     const conn = await connect();
-    const sqlUpdateUser = "UPDATE user SET authToken=? WHERE userId=?"
+    const sqlQuery = "UPDATE user SET authToken=? WHERE userId=?"
     
-    const result = await conn.query(sqlUpdateUser, [ accessToken, userId ]);
+    const result = await conn.query(sqlQuery, [ accessToken, userId ]);
+    return true;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}
+
+const getSongs = async (take, skip) => {
+  try {
+    const conn = await connect();
+    const sqlQuery = `select * from song order by [views] offset ? rows FETCH NEXT ? rows only`;
+    
+    const result = await conn.query(sqlQuery, [ skip, take ]);
+    console.log('result', result);
+
+    return result[0];
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}
+
+const insertSong = async ({ name, artistId, userId, content, level, genre, videoUrl }) => {
+  try {
+    const conn = await connect();
+    const sqlQuery = "INSERT INTO song (songId, name, content, level, views, videoUrl, genre, userId, artistId, rating) VALUES (NULL, ?, ?, ?, 0, ?, ?, ?, ?, 0)"
+    await conn.query(sqlQuery, [ name, content, level, videoUrl, genre, userId, artistId ]);
+    
     return true;
   } catch (error) {
     console.error(error);
@@ -77,4 +105,6 @@ export default {
   getUserByEmail,
   updateUserAccessToken,
   updateUserInfo,
+  getSongs,
+  insertSong,
 }

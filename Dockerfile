@@ -1,7 +1,6 @@
-# Derivando da imagem oficial do MySQL
-FROM mysql:5.7
-
-# Adicionando os scripts SQL para serem executados na criação do banco
-COPY ./src/infra/migrations/ /docker-entrypoint-initdb.d/
-
-# 
+FROM node:10-alpine
+WORKDIR /app
+COPY package.json .
+RUN npm install
+COPY src/index.js .
+CMD ["node", "index.js"]

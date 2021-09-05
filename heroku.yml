@@ -1,0 +1,8 @@
+build:
+  docker:
+    web: Dockerfile
+  config:
+    MYSQL_ROOT_PASSWORD: 123456
+    MYSQL_DATABASE: AcordePraVida
+    MYSQL_USER: User
+    MYSQL_PASSWORD: 456789
