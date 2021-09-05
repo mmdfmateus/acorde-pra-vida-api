@@ -39,4 +39,7 @@ router.put('/songs/:id', songController.editSong);
 //  *** CRIAR ARTISTA ***
 router.post('/artists', artistController.createArtist);
 
+//  *** EDITAR ARTISTA ***
+router.put('/artists/:id', artistController.editArtist);
+
 export default router;

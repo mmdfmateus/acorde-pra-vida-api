@@ -121,8 +121,8 @@ const updateSong = async (id, data) => {
     let updateString = '';
     
     Object.keys(data).forEach(key => {
-      // if is an id it can't have ""
-      if (key == 'artistId' || key == 'userId=' || key == 'level=') {
+      // if it is an INT on database, it can't have ""
+      if (key == 'artistId' || key == 'userId=' || key == 'level=' || key == 'rating') {
         updateString += `${key}=${data[key]}, `
       } else {
         updateString += `${key}="${data[key]}", `
@@ -146,12 +146,39 @@ const insertArtist = async ({ name, genre, photoUrl }) => {
   try {
     const conn = await connect();
     const sqlQuery = "INSERT INTO artist (artistId, name, views, photoUrl, genre, rating) VALUES (NULL, ?, 0, ?, ?, 0)"
-    await conn.query(sqlQuery, [ name, photoUrl, photoUrl ]);
+    await conn.query(sqlQuery, [ name, photoUrl, genre ]);
     
     return true;
   } catch (error) {
     console.error(error);
     return false;
+  }
+}
+
+const updateArtist = async (id, data) => {
+  try {
+    const conn = await connect();
+    let updateString = '';
+    
+    Object.keys(data).forEach(key => {
+      // if it is an INT on database, it can't have ""
+      if (key == 'views' || key == 'rating=') {
+        updateString += `${key}=${data[key]}, `
+      } else {
+        updateString += `${key}="${data[key]}", `
+      }
+    });
+
+    // remove the last comma
+    updateString = updateString.replace(/,([^,]*)$/, '$1');
+
+    const sqlQuery = `UPDATE artist SET ${updateString} WHERE artistId=${id}`;
+    const result = await conn.query(sqlQuery);
+
+    return true;
+  } catch (error) {
+    console.error(error);
+    return undefined;
   }
 }
 
@@ -170,4 +197,5 @@ export default {
 
   /* ARTISTS */
   insertArtist,
+  updateArtist,
 }

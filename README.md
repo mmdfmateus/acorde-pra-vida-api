@@ -136,7 +136,7 @@ Content-Type: application/json
 }
 ```
 
-### **Editar artista**
+### **Editar artista** ✅
 
 ```
 PUT /api/artists

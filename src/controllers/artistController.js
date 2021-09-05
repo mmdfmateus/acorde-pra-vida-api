@@ -6,6 +6,14 @@ const createArtist = async (req, res) => {
   return res.json({ status: result ? 'ok' : 'error' });
 }
 
+const editArtist = async (req, res) => {
+  const { id } = req.params;
+  const result = await db.updateArtist(id, req.body);
+
+  return res.json({ status: result ? 'ok' : 'error' });
+}
+
 export default {
   createArtist,
+  editArtist,
 }
