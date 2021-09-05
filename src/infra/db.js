@@ -115,6 +115,33 @@ const insertSong = async ({ name, artistId, userId, content, level, genre, video
   }
 }
 
+const updateSong = async (id, data) => {
+  try {
+    const conn = await connect();
+    let updateString = '';
+    
+    Object.keys(data).forEach(key => {
+      // if is an id it can't have ""
+      if (key == 'artistId' || key == 'userId=' || key == 'level=') {
+        updateString += `${key}=${data[key]}, `
+      } else {
+        updateString += `${key}="${data[key]}", `
+      }
+    });
+
+    // remove the last comma
+    updateString = updateString.replace(/,([^,]*)$/, '$1');
+
+    const sqlQuery = `UPDATE song SET ${updateString} WHERE songId=${id}`;
+    const result = await conn.query(sqlQuery);
+
+    return true;
+  } catch (error) {
+    console.error(error);
+    return undefined;
+  }
+}
+
 export default {
   insertUser,
   getUserByEmail,
@@ -123,4 +150,5 @@ export default {
   getSongs,
   getSongById,
   insertSong,
+  updateSong,
 }

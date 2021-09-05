@@ -24,10 +24,13 @@ router.put('/users/:id', userController.updateUserInfo);
 //  *** BUSCAR MÚSICAS ***
 router.get('/songs', songController.getSongs);
 
-//  *** BUSCAR MÚSICAS ***
+//  *** BUSCAR MÚSICA PELO ID ***
 router.get('/songs/:id', songController.getSongById);
 
 //  *** CRIAR MÚSICA ***
 router.post('/songs', songController.createSong);
+
+//  *** EDITAR MÚSICA ***
+router.put('/songs/:id', songController.editSong);
 
 export default router;

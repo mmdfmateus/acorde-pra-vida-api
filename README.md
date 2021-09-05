@@ -86,7 +86,7 @@ Content-Type: application/json
 }
 ```
 
-### **Editar música**
+### **Editar música** ✅
 
 ```
 PUT /api/songs/<ID DA MÚSICA>

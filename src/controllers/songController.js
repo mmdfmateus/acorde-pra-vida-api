@@ -33,8 +33,16 @@ const createSong = async (req, res) => {
   return res.json({ status: result ? 'ok' : 'error' });
 }
 
+const editSong = async (req, res) => {
+  const { id } = req.params;
+  const result = await db.updateSong(id, req.body);
+
+  return res.json({ status: result ? 'ok' : 'error' });
+}
+
 export default {
+  createSong,
   getSongs,
   getSongById,
-  createSong,
+  editSong,
 }
