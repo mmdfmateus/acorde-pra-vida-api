@@ -15,6 +15,18 @@ const getSongs = async (req, res) => {
   return res.json(result);
 }
 
+const getSongById = async (req, res) => {
+  let { id } = req.params;
+
+  if (!id) {
+    return res.status(400).json({ error: "Id was not provided" });
+  }
+
+  let result = await db.getSongById(id);
+
+  return res.json(result ?? {});
+}
+
 const createSong = async (req, res) => {
   const result = await db.insertSong(req.body);
 
@@ -23,5 +35,6 @@ const createSong = async (req, res) => {
 
 export default {
   getSongs,
+  getSongById,
   createSong,
 }

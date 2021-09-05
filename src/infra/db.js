@@ -88,6 +88,20 @@ const getSongs = async () => {
   }
 }
 
+const getSongById = async (id) => {
+  try {
+    const conn = await connect();
+    const sqlQuery = `select * from song where songId = ?`;
+    
+    const result = await conn.query(sqlQuery, [ id ]);
+
+    return result[0][0];
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}
+
 const insertSong = async ({ name, artistId, userId, content, level, genre, videoUrl }) => {
   try {
     const conn = await connect();
@@ -107,5 +121,6 @@ export default {
   updateUserAccessToken,
   updateUserInfo,
   getSongs,
+  getSongById,
   insertSong,
 }

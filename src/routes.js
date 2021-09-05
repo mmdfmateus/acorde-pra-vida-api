@@ -24,6 +24,9 @@ router.put('/users/:id', userController.updateUserInfo);
 //  *** BUSCAR MÚSICAS ***
 router.get('/songs', songController.getSongs);
 
+//  *** BUSCAR MÚSICAS ***
+router.get('/songs/:id', songController.getSongById);
+
 //  *** CRIAR MÚSICA ***
 router.post('/songs', songController.createSong);
 
