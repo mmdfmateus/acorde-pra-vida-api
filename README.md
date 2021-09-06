@@ -48,6 +48,11 @@ Content-Type: application/json
 }
 ```
 
+### **Buscar usuário** ✅
+```
+GET /api/users/<EMAIL DO USUÁRIO>
+```
+
 ## **Músicas**
 
 ### **Buscar músicas** ✅
@@ -82,6 +87,8 @@ Content-Type: application/json
   'artistId': string,
   'userId': string,
   'content': string,
+  'level': string,
+  'genre': string,
   'videoUrl': string
 }
 ```
@@ -95,7 +102,10 @@ Content-Type: application/json
 {
   'name': string,
   'artistId': string,
+  'userId': string,
   'content': string,
+  'level': string,
+  'genre': string,
   'videoUrl': string
 }
 ```
@@ -131,8 +141,8 @@ Content-Type: application/json
 
 {
   'name': string,
-  'photoUrl': string,
-  'musicStyle': string
+  'genre': string,
+  'photoUrl': string
 }
 ```
 
