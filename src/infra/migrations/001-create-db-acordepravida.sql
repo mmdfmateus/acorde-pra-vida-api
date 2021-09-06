@@ -47,8 +47,8 @@ DROP TABLE IF EXISTS `AcordePraVida`.`song` ;
 
 CREATE TABLE IF NOT EXISTS `AcordePraVida`.`song` (
 `songId` INT PRIMARY KEY AUTO_INCREMENT,
-`name` VARCHAR(256),
-`content` VARCHAR(1024),
+`name` VARCHAR(512),
+`content` VARCHAR(10000),
 `level` INT NULL,
 `views` INT NULL,
 `videoUrl` VARCHAR(256) NOT NULL,
@@ -57,6 +57,11 @@ CREATE TABLE IF NOT EXISTS `AcordePraVida`.`song` (
 `artistId` INT NOT NULL,
 `rating` INT NOT NULL)
 ENGINE = InnoDB;
+
+
+
+
+
 
 
 -- -----------------------------------------------------

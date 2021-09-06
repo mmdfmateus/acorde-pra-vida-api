@@ -2,7 +2,7 @@
 FROM mysql:5.7
 
 # Adicionando os scripts SQL para serem executados na criação do banco
-COPY ./src/infra/migrations/ /docker-entrypoint-initdb.d/
+COPY ./migrations/ /docker-entrypoint-initdb.d/
 
 ENV MYSQL_ROOT_PASSWORD=123456
 ENV MYSQL_DATABASE=AcordePraVida
