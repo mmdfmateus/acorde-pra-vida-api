@@ -102,7 +102,7 @@ Content-Type: application/json
 
 ## **Artistas**
 
-### **Buscar artistas**
+### **Buscar artistas** ✅
 
 Retorna os 10 primeiras artistas por padrão
 
@@ -123,7 +123,7 @@ GET /api/artists/<ID DO ARTISTA>
 Content-Type: application/json
 ```
 
-### **Criar artista**
+### **Criar artista** ✅
 
 ```
 POST /api/artists
@@ -136,7 +136,7 @@ Content-Type: application/json
 }
 ```
 
-### **Editar artista**
+### **Editar artista** ✅
 
 ```
 PUT /api/artists
