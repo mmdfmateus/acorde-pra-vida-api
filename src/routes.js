@@ -11,8 +11,15 @@ const router = express.Router();
 router.post('/signup', signupController.signUp);
 
 
+
+
 //  *** LOGIN ***
 router.post('/login', loginController.login);
+
+//  *** LOGIN ***
+router.post('/logout/:id', loginController.logout);
+
+
 
 
 //  *** BUSCAR USUÁRIO PELO EMAIL ***
@@ -20,6 +27,8 @@ router.get('/users/:email', userController.getUserByEmail);
 
 //  *** ATUALIZAR DADOS CADASTRAIS ***
 router.put('/users/:id', userController.updateUserInfo);
+
+
 
 
 //  *** BUSCAR MÚSICAS ***
@@ -33,6 +42,7 @@ router.post('/songs', songController.createSong);
 
 //  *** EDITAR MÚSICA ***
 router.put('/songs/:id', songController.editSong);
+
 
 
 

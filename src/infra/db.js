@@ -72,6 +72,19 @@ const updateUserAccessToken = async (userId, accessToken) => {
   }
 }
 
+const revokeUserAccessToken = async (userId) => {
+  try {
+    const conn = await connect();
+    const sqlQuery = "UPDATE user SET authToken=NULL WHERE userId=?"
+    
+    const result = await conn.query(sqlQuery, [ userId ]);
+    return true;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}
+
 const getSongs = async () => {
   try {
     const conn = await connect();
@@ -215,6 +228,7 @@ export default {
   insertUser,
   getUserByEmail,
   updateUserAccessToken,
+  revokeUserAccessToken,
   updateUserInfo,
 
   /* SONGS */
