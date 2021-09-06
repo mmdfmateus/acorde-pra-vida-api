@@ -20,10 +20,11 @@ const getArtists = async (req, res) => {
   skip = skip ?? 0;
 
   let artists = await db.getArtists();
+  const total = artists.length;
   const result = artists.slice(skip);
   result.length = take > result.length ? result.length : take;
 
-  return res.json(result);
+  return res.json({ count: total, items: result });
 }
 
 const getArtistById = async (req, res) => {
