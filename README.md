@@ -1,6 +1,14 @@
 # Acorde pra vida! API
 REST API for "Acorde pra vida!" website, part of the final project from Web Development subject at CEFET-MG
 
+Esta api está publicada [aqui](https://5664-191-185-197-51.ngrok.io/)!
+
+---
+
+# Executando
+
+Para executar a API localmente basta clonar o repositório e executar o comando `docker-compose up`. Para isso, é necessário ter o [Docker](https://www.docker.com) instalado.
+
 ---
 
 # Endpoints
