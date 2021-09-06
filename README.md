@@ -1,7 +1,7 @@
 # Acorde pra vida! API
 REST API for "Acorde pra vida!" website, part of the final project from Web Development subject at CEFET-MG
 
-Esta api está publicada [aqui](https://5664-191-185-197-51.ngrok.io/)!
+Esta api está publicada [aqui](https://acordepravida-api.herokuapp.com/api)!
 
 ---
 
