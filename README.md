@@ -102,7 +102,7 @@ Content-Type: application/json
 
 ## **Artistas**
 
-### **Buscar artistas**
+### **Buscar artistas** ✅
 
 Retorna os 10 primeiras artistas por padrão
 
