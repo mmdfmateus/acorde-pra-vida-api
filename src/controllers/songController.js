@@ -7,10 +7,8 @@ const getSongs = async (req, res) => {
   skip = skip ?? 0;
 
   let songs = await db.getSongs();
-  const result = songs.slice(skip, skip + (take - 1));
-  console.log('songs', result.length);
-  console.log('take', take);
-  console.log('skip', skip);
+  const result = songs.slice(skip);
+  result.length = take > result.length ? result.length : take;
 
   return res.json(result);
 }
