@@ -18,7 +18,7 @@ export const login = async (req, res) => {
   const authToken = jwtService.generate(user.userId);
   const success = await db.updateUserAccessToken(user.userId, authToken);
 
-  return res.json({ status: success ? 'ok' : 'error', authToken });
+  return res.json({ status: success ? 'ok' : 'error', id: user.userId, authToken });
 }
 
 export default {
