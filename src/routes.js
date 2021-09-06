@@ -42,4 +42,10 @@ router.post('/artists', artistController.createArtist);
 //  *** EDITAR ARTISTA ***
 router.put('/artists/:id', artistController.editArtist);
 
+//  *** BUSCAR ARTISTAS ***
+router.get('/artists', artistController.getArtists);
+
+//  *** BUSCAR ARTISTA PELO ID ***
+router.get('/artists/:id', artistController.getArtistById);
+
 export default router;

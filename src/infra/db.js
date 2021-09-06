@@ -75,7 +75,6 @@ const updateUserAccessToken = async (userId, accessToken) => {
 const getSongs = async () => {
   try {
     const conn = await connect();
-    // const sqlQuery = `select * from song limit ? offset ?`;
     const sqlQuery = `select * from song`;
     
     const result = await conn.query(sqlQuery);
@@ -182,6 +181,35 @@ const updateArtist = async (id, data) => {
   }
 }
 
+const getArtists = async () => {
+  try {
+    const conn = await connect();
+    const sqlQuery = `select * from artist`;
+    
+    const result = await conn.query(sqlQuery);
+    console.log('result', result[0]);
+
+    return result[0];
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}
+
+const getArtistById = async (id) => {
+  try {
+    const conn = await connect();
+    const sqlQuery = `select * from artist where artistId = ?`;
+    
+    const result = await conn.query(sqlQuery, [ id ]);
+
+    return result[0][0];
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}
+
 export default {
   /* USER */
   insertUser,
@@ -198,4 +226,6 @@ export default {
   /* ARTISTS */
   insertArtist,
   updateArtist,
+  getArtists,
+  getArtistById,
 }
