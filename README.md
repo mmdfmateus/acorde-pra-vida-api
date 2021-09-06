@@ -34,6 +34,12 @@ Content-Type: application/json
 }
 ```
 
+### **Logout**  ✅
+
+```
+POST /api/logout/<ID DO USUÁRIO>
+```
+
 ## **Usuário**
 
 ### **Alterar dados cadastrais** ✅
